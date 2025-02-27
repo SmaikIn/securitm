@@ -33,25 +33,9 @@ RUN apt-get update && apt-get install -y \
     # install composer
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     \
-    #install nodejs
-    #&& curl -fsSL https://deb.nodesource.com/setup_current.18 | bash - \
-   #&& apt-get install -y nodejs \
-    \
     #intsall xdebug
    && pecl install xdebug \
    && docker-php-ext-enable xdebug \
-   && pecl install mailparse \
-   && docker-php-ext-enable mailparse
-
-RUN apt-get update && apt-get install -y libmagickwand-dev --no-install-recommends && rm -rf /var/lib/apt/lists/*
-RUN printf "\n" | pecl install imagick
-RUN docker-php-ext-enable imagick
-ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0" \
-    PHP_OPCACHE_MAX_ACCELERATED_FILES="10000" \
-    PHP_OPCACHE_MEMORY_CONSUMPTION="192" \
-    PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10"
-
-RUN docker-php-ext-install opcache
 # Add user for aplication
 RUN groupadd -g 1000 admin && useradd -u 1000 -ms /bin/bash -g admin admin
 #COPY --chown=admin:admin . /var/www
