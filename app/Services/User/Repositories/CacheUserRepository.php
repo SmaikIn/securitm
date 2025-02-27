@@ -35,6 +35,6 @@ final class CacheUserRepository
     {
         $key = sprintf(config('cache.keys.users.user'), $userDto);
 
-        Cache::set(config('cache.keys.users.first_page'), $userDto);
+        Cache::set($key, $userDto);
     }
 }
