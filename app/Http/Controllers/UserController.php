@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use app\Http\Requests\User\CreateUserRequest;
-use app\Http\Requests\User\DeleteUserRequest;
-use app\Http\Requests\User\IndexUserRequest;
-use app\Http\Requests\User\ShowUserRequest;
-use app\Http\Requests\User\UpdateUserRequest;
+use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\DeleteUserRequest;
+use App\Http\Requests\User\IndexUserRequest;
+use App\Http\Requests\User\ShowUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\PaginateResource;
 use App\Http\Resources\UserResource;
 use App\Http\Responses\JsonApiResponse;
@@ -29,7 +29,7 @@ class UserController extends Controller
 
     public function index(IndexUserRequest $request)
     {
-        if (is_null($request->get('search'))) {
+        if (is_null($request->input('search'))) {
             return $this->getPagination($request);
         } else {
             return $this->getSearchPagination($request);
@@ -40,11 +40,11 @@ class UserController extends Controller
     {
         try {
             $dto = new CreateUserDto(
-                name: $request->get('name'),
-                email: Email::create($request->get('email')),
-                password: Password::create($request->get('password')),
-                ip: Ip::create($request->get('ip')),
-                comment: $request->get('comment'),
+                name: $request->input('name'),
+                email: Email::create($request->input('email')),
+                password: Password::create($request->input('password')),
+                ip: Ip::create($request->input('ip')),
+                comment: $request->input('comment'),
             );
         } catch (\Throwable $exception) {
             return new JsonErrorResponse($exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -65,7 +65,7 @@ class UserController extends Controller
 
     public function show(ShowUserRequest $request)
     {
-        $userId = $request->get('id');
+        $userId = $request->input('id');
 
         try {
             $user = $this->userService->find($userId);
@@ -80,11 +80,11 @@ class UserController extends Controller
     {
         try {
             $dto = new UpdateUserDto(
-                id: $request->get('id'),
-                name: $request->get('name'),
-                password: Password::create($request->get('password')),
-                ip: Ip::create($request->get('ip')),
-                comment: $request->get('comment'),
+                id: $request->input('id'),
+                name: $request->input('name'),
+                password: Password::create($request->input('password')),
+                ip: Ip::create($request->input('ip')),
+                comment: $request->input('comment'),
             );
         } catch (\Throwable $exception) {
             return new JsonErrorResponse($exception->getMessage(), Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -105,7 +105,7 @@ class UserController extends Controller
 
     public function destroy(DeleteUserRequest $request)
     {
-        $userId = $request->get('id');
+        $userId = $request->input('id');
 
         try {
             $bool = $this->userService->delete($userId);
@@ -123,7 +123,7 @@ class UserController extends Controller
 
     private function getPagination(IndexUserRequest $request)
     {
-        $page = $request->get('page', 1);
+        $page = $request->input('page', 1);
         try {
             $paginate = $this->userService->getUserPagination($page);
         } catch (ServiceException $exception) {
@@ -137,8 +137,8 @@ class UserController extends Controller
     private function getSearchPagination(IndexUserRequest $request)
     {
         try {
-            $paginate = $this->userService->getSearchUserPagination($request->get('search'),
-                $request->get('sort', false), $request->get('page', 1));
+            $paginate = $this->userService->getSearchUserPagination($request->input('search'),
+                $request->input('sort', false), $request->input('page', 1));
         } catch (ServiceException $exception) {
             return new JsonErrorResponse($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
