@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\User\Dto;
 
-use App\Domain\ValueObjects\Email;
-use App\Domain\ValueObjects\Ip;
+use App\ValueObjects\Email;
+use App\ValueObjects\Ip;
 use Carbon\Carbon;
 
 final readonly class UserDto

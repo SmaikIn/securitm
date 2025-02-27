@@ -39,16 +39,16 @@ final class DatabaseUserRepository
 
     public function getSearchPage(string $search, bool $sortFlag, int $page, int $perPage): PaginationDto
     {
-        $dbUsers = User::where('name', 'like', '%'.$search.'%');
+        $dbUsersQuery = User::where('name', 'like', '%'.$search.'%');
 
         if ($sortFlag) {
-            $dbUsers = $dbUsers->orderBy('name');
+            $dbUsersQuery = $dbUsersQuery->orderBy('name');
         }
 
-        $dbUsers->paginate(perPage: $perPage, page: $page);
+        $dbUsers = $dbUsersQuery->paginate(perPage: $perPage, page: $page);
 
         $users = [];
-        foreach ($dbUsers->getCollection() as $dbUser) {
+        foreach ($dbUsers as $dbUser) {
             $users[] = $this->formatUserDto($dbUser);
         }
 

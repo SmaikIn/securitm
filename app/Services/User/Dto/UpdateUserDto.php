@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\User\Dto;
 
 
-use App\Domain\ValueObjects\Ip;
-use App\Domain\ValueObjects\Password;
+use App\ValueObjects\Ip;
+use App\ValueObjects\Password;
 
 final readonly class UpdateUserDto
 {

@@ -54,7 +54,6 @@ final readonly class UserService
                 );
             }
         }
-
         try {
             $paginateDto = $this->databaseUserRepository->getPage($page, self::ITEMS_ON_PAGE);
         } catch (\Throwable $exception) {

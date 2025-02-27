@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ValueObjects\Email;
-use App\ValueObjects\Ip;
-use App\ValueObjects\Password;
 use app\Http\Requests\User\CreateUserRequest;
 use app\Http\Requests\User\DeleteUserRequest;
 use app\Http\Requests\User\IndexUserRequest;
@@ -18,6 +15,9 @@ use App\Services\User\Dto\CreateUserDto;
 use App\Services\User\Dto\UpdateUserDto;
 use app\Services\User\Exceptions\ServiceException;
 use App\Services\User\UserService;
+use App\ValueObjects\Email;
+use App\ValueObjects\Ip;
+use App\ValueObjects\Password;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -120,7 +120,6 @@ class UserController extends Controller
     private function getPagination(IndexUserRequest $request)
     {
         $page = $request->get('page', 1);
-
         try {
             $paginate = $this->userService->getUserPagination($page);
         } catch (ServiceException $exception) {
