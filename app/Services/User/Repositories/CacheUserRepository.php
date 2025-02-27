@@ -33,7 +33,7 @@ final class CacheUserRepository
 
     public function setUser(UserDto $userDto): void
     {
-        $key = sprintf(config('cache.keys.users.user'), $userDto);
+        $key = sprintf(config('cache.keys.users.user'), $userDto->getId());
 
         Cache::set($key, $userDto);
     }

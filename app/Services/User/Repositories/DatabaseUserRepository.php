@@ -63,7 +63,7 @@ final class DatabaseUserRepository
 
     public function find(int $userId): UserDto
     {
-        $user = User::find($userId)->firstOrFail();
+        $user = User::findOrFail($userId);
 
         return $this->formatUserDto($user);
     }

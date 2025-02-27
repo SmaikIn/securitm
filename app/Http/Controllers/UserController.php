@@ -108,12 +108,16 @@ class UserController extends Controller
         $userId = $request->get('id');
 
         try {
-            $user = $this->userService->delete($userId);
+            $bool = $this->userService->delete($userId);
         } catch (ServiceException $exception) {
             return new JsonErrorResponse($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return new JsonApiResponse(UserResource::make($user)->toArray($request), status: Response::HTTP_ACCEPTED);
+        if ($bool) {
+            return new JsonApiResponse([], status: Response::HTTP_ACCEPTED);
+        } else {
+            return new JsonApiResponse([], status: Response::HTTP_BAD_REQUEST);
+        }
     }
 
 
