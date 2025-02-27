@@ -2,13 +2,13 @@
 
 namespace App\Services\User\Repositories;
 
-use App\Domain\ValueObjects\Email;
-use App\Domain\ValueObjects\Ip;
 use App\Models\User;
 use App\Services\User\Dto\CreateUserDto;
 use App\Services\User\Dto\PaginationDto;
 use App\Services\User\Dto\UpdateUserDto;
 use App\Services\User\Dto\UserDto;
+use App\ValueObjects\Email;
+use App\ValueObjects\Ip;
 
 
 final class DatabaseUserRepository

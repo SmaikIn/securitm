@@ -10,7 +10,6 @@ use app\Services\User\Exceptions\ServiceException;
 use App\Services\User\Repositories\CacheUserRepository;
 use App\Services\User\Repositories\DatabaseUserRepository;
 use Illuminate\Support\Facades\Log;
-use Throwable;
 
 final readonly class UserService
 {
@@ -27,7 +26,7 @@ final readonly class UserService
     {
         try {
             $paginateDto = $this->databaseUserRepository->getSearchPage($search, $sortFlag, $page, self::ITEMS_ON_PAGE);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),
@@ -47,7 +46,7 @@ final readonly class UserService
                 if ($paginateDto instanceof PaginationDto) {
                     return $paginateDto;
                 }
-            } catch (Throwable $exception) {
+            } catch (\Throwable $exception) {
                 Log::channel('stderr')->debug('UserService:',
                     [
                         'message' => $exception->getMessage(),
@@ -58,7 +57,7 @@ final readonly class UserService
 
         try {
             $paginateDto = $this->databaseUserRepository->getPage($page, self::ITEMS_ON_PAGE);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),
@@ -70,7 +69,7 @@ final readonly class UserService
         if ($page === 1) {
             try {
                 $this->cacheUserRepository->setFirstPage($paginateDto);
-            } catch (Throwable $exception) {
+            } catch (\Throwable $exception) {
                 Log::channel('stderr')->debug('UserService:',
                     [
                         'message' => $exception->getMessage(),
@@ -89,7 +88,7 @@ final readonly class UserService
             if ($user instanceof UserDto) {
                 return $user;
             }
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),
@@ -99,7 +98,7 @@ final readonly class UserService
 
         try {
             $user = $this->databaseUserRepository->find($userId);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),
@@ -110,7 +109,7 @@ final readonly class UserService
 
         try {
             $this->cacheUserRepository->setUser($user);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),
@@ -126,7 +125,7 @@ final readonly class UserService
     {
         try {
             return $this->databaseUserRepository->delete($userId);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),
@@ -140,7 +139,7 @@ final readonly class UserService
     {
         try {
             return $this->databaseUserRepository->create($createUserDto);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),
@@ -154,7 +153,7 @@ final readonly class UserService
     {
         try {
             return $this->databaseUserRepository->update($updateUserDto);
-        } catch (Throwable $exception) {
+        } catch (\Throwable $exception) {
             Log::channel('stderr')->debug('UserService:',
                 [
                     'message' => $exception->getMessage(),

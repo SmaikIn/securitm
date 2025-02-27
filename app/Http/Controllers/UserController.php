@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\ValueObjects\Email;
-use App\Domain\ValueObjects\Ip;
-use App\Domain\ValueObjects\Password;
+use App\ValueObjects\Email;
+use App\ValueObjects\Ip;
+use App\ValueObjects\Password;
 use app\Http\Requests\User\CreateUserRequest;
 use app\Http\Requests\User\DeleteUserRequest;
 use app\Http\Requests\User\IndexUserRequest;
